@@ -32,11 +32,6 @@ public class CalculationService {
         return calculationRepository.findAll();
     }
 
-    public Calculation findOneCalculation(Long id) {
-        return calculationRepository.findById(id)
-                .orElseThrow(() -> new CalculatorException(String.format(NO_RESULT_MESSAGE, id)));
-    }
-
     private BiFunction<Integer, Integer, Double> getOperation(OperationType operationType) {
         switch (operationType) {
             case MULTIPLICATION: return simpleCalculator::multiply;

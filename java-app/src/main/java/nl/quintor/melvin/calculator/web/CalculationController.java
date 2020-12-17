@@ -22,9 +22,4 @@ class CalculationController {
     Calculation newCalculation(@RequestBody Calculation calculation) {
         return calculationService.calculate(calculation);
     }
-
-    @GetMapping("/calculations/{id}")
-    Calculation one(@PathVariable Long id) {
-        return calculationService.findOneCalculation(id);
-    }
 }

@@ -1,0 +1,50 @@
+<div class="container-fluid">
+  <div class="row">
+    <div id="event-container" class="col-6 offset-3">
+      <form [formGroup]="calculatorForm" (ngSubmit)="onSubmit(calculatorForm.value)">
+
+        <div class="row row-padding">
+          <div class="col-4">
+            <div class="form-group">
+              <label for="inputNumberOne">Nummer één</label>
+              <input type="number" class="form-control" formControlName="numberOne"  id="inputNumberOne" placeholder="0">
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="form-group">
+              <label for="exampleFormControlSelect1">Uit te voeren operatie</label>
+              <select class="form-control" formControlName="operationType" id="exampleFormControlSelect1">
+                <option *ngFor="let operation of operations" [value]="operation.operationType">{{operation.description}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="form-group">
+              <label for="inputNumberTwo">Nummer twee</label>
+              <input type="number" class="form-control" formControlName="numberTwo" id="inputNumberTwo" placeholder="0">
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-2">
+            <button [disabled]="calculatorForm?.invalid" type="submit" class="btn btn-primary">Bereken</button>
+          </div>
+          <div class="col-10">
+            Let op: het resultaat van de berekening wordt onderaan de lijst aan de rechterkant van de pagina toegevoegd!
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="offset-1 col-2">
+      <div class="row">
+        <div id="history-group">
+          <label for="historyFormControl">Historie van berekeningen</label>
+          <select multiple class="form-control" id="historyFormControl">
+            <option *ngFor="let calculation of calculations">{{calculation.numberOne}} {{getOperatorByType(calculation.operationType)}}  {{calculation.numberTwo}} = {{calculation.result}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

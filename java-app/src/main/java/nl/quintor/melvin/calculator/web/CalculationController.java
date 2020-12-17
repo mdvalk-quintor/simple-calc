@@ -2,8 +2,7 @@ package nl.quintor.melvin.calculator.web;
 
 import lombok.RequiredArgsConstructor;
 import nl.quintor.melvin.calculator.domain.Calculation;
-import nl.quintor.melvin.calculator.domain.exception.CalculatorException;
-import nl.quintor.melvin.calculator.repository.CalculationRepository;
+import nl.quintor.melvin.calculator.service.CalculationService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,23 +11,20 @@ import java.util.List;
 @RequiredArgsConstructor
 class CalculationController {
 
-    private final CalculationRepository calculationRepository;
-
-    private static final String NO_RESULT_MESSAGE = "No calculation found with id %d";
+    private final CalculationService calculationService;
 
     @GetMapping("/calculations")
     List<Calculation> all() {
-        return calculationRepository.findAll();
+        return calculationService.findAllCalculations();
     }
 
     @PostMapping("/calculations")
-    Calculation newCalculation(@RequestBody Calculation newCalculation) {
-        return calculationRepository.save(newCalculation);
+    Calculation newCalculation(@RequestBody Calculation calculation) {
+        return calculationService.calculate(calculation);
     }
 
     @GetMapping("/calculations/{id}")
     Calculation one(@PathVariable Long id) {
-        return calculationRepository.findById(id)
-                .orElseThrow(() -> new CalculatorException(String.format(NO_RESULT_MESSAGE, id)));
+        return calculationService.findOneCalculation(id);
     }
 }

@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 
 @Data
 @Builder
@@ -22,6 +21,8 @@ public class Calculation {
     @Enumerated(EnumType.STRING)
     private OperationType operationType;
 
-    private BigDecimal numberOne;
-    private BigDecimal numberTwo;
+    private Integer numberOne;
+    private Integer numberTwo;
+
+    private Double result;
 }

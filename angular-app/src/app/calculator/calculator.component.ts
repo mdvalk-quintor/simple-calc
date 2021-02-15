@@ -4,6 +4,9 @@ import {CalculationService} from '../shared/service/calculation.service';
 import {Calculation} from '../shared/model/calculation';
 import {OperationType} from '../shared/model/operation-type';
 import {Operation} from '../shared/model/operation';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { click, decrement, increment, reset } from '../shared/counter.actions';
 
 @Component({
   selector: 'app-calculator',
@@ -27,10 +30,16 @@ export class CalculatorComponent implements AfterViewInit {
     new Operation(OperationType.MULTIPLICATION, 'Vermenigvuldigen'),
   ];
 
+  count$: Observable<number>;
+  clicks$: Observable<number>;
+
   constructor(
     private calculationService: CalculationService,
     private formBuilder: FormBuilder,
+    private store: Store<{ count: number, clicks: number }>
   ) {
+    this.count$ = store.select('count');
+    this.clicks$ = store.select('clicks');
   }
 
   onSubmit(eventData: any): void {
@@ -53,7 +62,20 @@ export class CalculatorComponent implements AfterViewInit {
     this.reset();
   }
 
+
+  increment(): void {
+    this.store.dispatch(increment());
+    this.store.dispatch(click());
+  }
+
+  decrement(): void {
+    this.store.dispatch(decrement());
+    this.store.dispatch(click());
+  }
+
   reset(): void {
+    this.store.dispatch(reset());
+    this.store.dispatch(click());
     this.calculatorForm.reset();
   }
 
